@@ -446,7 +446,7 @@ class RTIClient extends EventEmitter {
         try {
             Log.debug(this, () => {return `Sending RTI (timed) message to `
                 + `federate ID: ${destFederateID}, port ID: ${destPortID} `
-                + `, time: ${time.toString('hex')}.`});
+                + `, time: ${time}.`});
             this.socket?.write(msg);
         } catch (e) {
             Log.error(this, () => {return e});
@@ -467,7 +467,7 @@ class RTIClient extends EventEmitter {
         completeTime.copy(msg, 1);
         // FIXME: Add microstep properly.
         try {
-            Log.debug(this, () => {return "Sending RTI logical time complete: " + completeTime.toString('hex');});
+            Log.debug(this, () => {return "Sending RTI logical time complete: " + completeTime;});
             this.socket?.write(msg);
         } catch (e) {
             Log.error(this, () => {return e});
@@ -916,7 +916,7 @@ export class FederatedApp extends App {
     public sendRTITimedMessage(msg: Buffer, destFederateID: number, destPortID: number ) {
         let time = this.util.getCurrentLogicalTime().toBinary();
         Log.debug(this, () => {return `Sending RTI timed message to federate ID: ${destFederateID}`
-            + ` port ID: ${destPortID} and time: ${time.toString('hex')}`});
+            + ` port ID: ${destPortID} and time: ${time}`});
         this.rtiClient.sendRTITimedMessage(msg, destFederateID, destPortID, time);
     }
 
@@ -948,7 +948,7 @@ export class FederatedApp extends App {
      */
     public sendRTINextEventTime(nextTime: TimeValue) {
         let time = nextTime.toBinary();
-        Log.debug(this, () => {return `Sending RTI next event time with time: ${time.toString('hex')}`});
+        Log.debug(this, () => {return `Sending RTI next event time with time: ${time}`});
         this.rtiClient.sendRTINextEventTime(time);
     }
 
